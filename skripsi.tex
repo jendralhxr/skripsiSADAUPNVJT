@@ -1,0 +1,666 @@
+% !TEX program = pdflatex
+% =====================================================================
+%  TEMPLATE PROPOSAL SKRIPSI -- PS SAINS DATA, FIK UPN "VETERAN" JATIM
+%  Dikonversi dari: _26-27__Template_Proposal_Skrispi_PS_Sains_Data.docx
+%  Kompilasi:  pdflatex main.tex  (jalankan 2-3 kali agar daftar isi benar)
+%              atau: latexmk -pdf main.tex
+% =====================================================================
+\documentclass[a4paper,12pt]{report}
+
+% ------------------------- PAKET DASAR -------------------------------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+% Pemenggalan kata bahasa Indonesia (otomatis dipakai jika babel-indonesian terpasang;
+% TeX Live/MiKTeX lengkap sudah menyertakannya).
+\IfFileExists{indonesian.ldf}{\usepackage[indonesian]{babel}}{}
+\usepackage{mathptmx}                 % Times (setara Times New Roman)
+\usepackage[scaled=.92]{helvet}       % Arial-like untuk sampul
+\usepackage{microtype}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage[table]{xcolor}
+\usepackage{tikz}
+\usepackage{setspace}
+\usepackage{array,longtable,multirow}
+\usepackage{enumitem}
+\usepackage{caption}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage[hidelinks]{hyperref}
+
+% Halaman sela: halaman kosong hanya berisi logo (opacity 50%, di tengah)
+\newcommand{\halamansela}{%
+  \clearpage
+  \thispagestyle{empty}
+  \null
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[opacity=0.5] at (current page.center)
+         {\includegraphics[width=7.5cm]{logo-upn.png}};
+  \end{tikzpicture}
+  \clearpage
+  \addtocounter{page}{-1}}   % halaman ini tidak dihitung dalam penomoran
+
+% ------------------------- DATA MAHASISWA ----------------------------
+% Ubah bagian ini saja; seluruh dokumen akan mengikuti.
+\newcommand{\judul}{KLASIFIKASI DOKUMEN PDF UNTUK KONVERSI MATA KULIAH PADA PROGRAM REKOGNISI PEMBELAJARAN LAMPAU MENGGUNAKAN PENDEKATAN NLP}
+\newcommand{\judulcase}{Klasifikasi Dokumen Pdf Untuk Konversi Mata Kuliah Pada Program Rekognisi Pembelajaran Lampau Menggunakan Pendekatan NLP}
+\newcommand{\judulabstrak}{Klasifikasi Dokumen PDF Untuk Konversi Mata Kuliah Pada Program Rekognisi Pembelajaran Lampau Menggunakan Pendekatan NLP}
+\newcommand{\judulen}{PDF Document Classification For Course Conversion In Past Learning Recognition Program Using NLP Approach}
+\newcommand{\nama}{NAMA MAHASISWA}
+\newcommand{\npm}{20212300020000}
+\newcommand{\prodi}{Sains Data}
+\newcommand{\tahun}{2025}
+\newcommand{\tanggal}{xx -- Nama Bulan -- Tahun}   % contoh: 12 Januari 2025
+\newcommand{\koorprodi}{Trimono, S.Si., M.Si.}
+\newcommand{\nipkoor}{199509082022031003}
+
+
+
+% ------------------------- WARNA SAMPUL ------------------------------
+\definecolor{coverorange}{RGB}{255,145,77}
+\definecolor{coveryellow}{RGB}{255,255,0}
+
+% ------------------------- TATA LETAK HALAMAN ------------------------
+% A4; kiri 4 cm, kanan 3 cm, atas/bawah 2,5 cm (isi); halaman awal atas 4 cm
+\usepackage[a4paper,left=4cm,right=3cm,top=4cm,bottom=3cm]{geometry}
+\onehalfspacing
+\setlength{\parindent}{1cm}
+\setlength{\parskip}{0pt}
+\setlength{\emergencystretch}{2em}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+% Nomor halaman di tengah bawah untuk awal bab
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\thepage}\renewcommand{\headrulewidth}{0pt}}
+\pagestyle{plain}
+% Halaman pertama tiap BAB tetap memakai gaya "plain" (tengah bawah).
+% Halaman isi (mulai BAB I): nomor di kanan atas.
+\fancypagestyle{isibab}{\fancyhf{}\fancyhead[R]{\thepage}\renewcommand{\headrulewidth}{0pt}}
+\setlength{\headheight}{15pt}
+
+% ------------------------- PENOMORAN ---------------------------------
+\renewcommand{\thechapter}{\Roman{chapter}}
+\renewcommand{\thesection}{\arabic{chapter}.\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+\renewcommand{\thefigure}{\arabic{chapter}.\arabic{figure}}
+\renewcommand{\thetable}{\arabic{chapter}.\arabic{table}}
+
+% ------------------------- JUDUL BAB / SUB BAB -----------------------
+% BAB bernomor: "BAB I" + judul, tengah, tebal 14 pt
+\titleformat{\chapter}[display]
+  {\normalfont\bfseries\centering\fontsize{14}{18}\selectfont}
+  {BAB \thechapter}{2pt}{\MakeUppercase}
+\titlespacing*{\chapter}{0pt}{0pt}{18pt}
+% BAB tanpa nomor (halaman awal): tengah, tebal 14 pt
+\titleformat{name=\chapter,numberless}[block]
+  {\normalfont\bfseries\centering\fontsize{14}{18}\selectfont}
+  {}{0pt}{}
+\titlespacing*{name=\chapter,numberless}{0pt}{0pt}{18pt}
+\titleformat{\section}[hang]{\normalfont\bfseries}{\thesection.}{1em}{}
+\titlespacing*{\section}{0pt}{18pt}{6pt}        % jarak antar sub bab 1,5 spasi
+\titleformat{\subsection}[hang]{\normalfont\bfseries}{\thesubsection.}{1em}{}
+\titlespacing*{\subsection}{0pt}{18pt}{6pt}
+
+% Daftar (enumerasi) rapat
+\setlist{nosep,leftmargin=1.0cm,itemsep=0pt,topsep=0pt}
+
+% Caption: "Gambar 2.1." / "Tabel 2.1." tebal; tabel di atas, gambar di bawah
+\captionsetup{labelsep=period,labelfont=bf,font=small,skip=6pt}
+\captionsetup[table]{position=above}
+\captionsetup[figure]{position=below}
+\AtBeginDocument{%
+  \renewcommand{\figurename}{Gambar}%
+  \renewcommand{\tablename}{Tabel}%
+  \renewcommand{\contentsname}{DAFTAR ISI}%
+  \renewcommand{\listfigurename}{DAFTAR GAMBAR}%
+  \renewcommand{\listtablename}{DAFTAR TABEL}%
+  \renewcommand{\bibname}{DAFTAR PUSTAKA}%
+  \def\figurename{Gambar}\def\tablename{Tabel}%
+}
+% Judul daftar gambar / tabel (tocloft): tengah, tebal 14 pt
+\renewcommand{\cftloftitlefont}{\hfill\bfseries\fontsize{14}{18}\selectfont}
+\renewcommand{\cftafterloftitle}{\hfill}
+\renewcommand{\cftlottitlefont}{\hfill\bfseries\fontsize{14}{18}\selectfont}
+\renewcommand{\cftafterlottitle}{\hfill}
+
+% ------------------------- DAFTAR ISI / GAMBAR / TABEL ---------------
+\renewcommand{\cftchapfont}{\bfseries}
+\renewcommand{\cftchappagefont}{\bfseries}
+\renewcommand{\cftchappresnum}{BAB~}
+\setlength{\cftchapnumwidth}{2.2cm}
+\renewcommand{\cftchapleader}{\bfseries\cftdotfill{\cftdotsep}}
+\setlength{\cftsecindent}{2.2cm}
+\setlength{\cftsecnumwidth}{1.0cm}
+\setlength{\cftsubsecindent}{3.2cm}
+\setlength{\cftsubsecnumwidth}{1.4cm}
+\renewcommand{\cftbeforechapskip}{6pt}
+\renewcommand{\cftbeforesecskip}{0pt}
+
+\renewcommand{\cftfigpresnum}{\bfseries Gambar~}
+\renewcommand{\cftfigaftersnum}{.}
+\setlength{\cftfigindent}{0pt}
+\setlength{\cftfignumwidth}{2.6cm}
+\renewcommand{\cfttabpresnum}{\bfseries Tabel~}
+\renewcommand{\cfttabaftersnum}{.}
+\setlength{\cfttabindent}{0pt}
+\setlength{\cfttabnumwidth}{2.6cm}
+\renewcommand{\cftfigdotsep}{\cftnodots}
+\renewcommand{\cfttabdotsep}{\cftnodots}
+\renewcommand{\cftfigleader}{\hfill}
+\renewcommand{\cfttableader}{\hfill}
+
+% Perintah: BAB tanpa nomor yang tetap masuk Daftar Isi
+\newcommand{\frontchapter}[1]{%
+  \chapter*{#1}\addcontentsline{toc}{chapter}{\protect\textbf{#1}}}
+
+% Sedikit ruang untuk tabel ber-spasi tunggal
+\newcommand{\singlespacedtable}{\singlespacing\small}
+
+% =====================================================================
+\begin{document}
+\pagenumbering{roman}
+
+% ============================ SAMPUL ================================
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture,overlay]
+  \fill[coverorange] (current page.south west) rectangle (current page.north east);
+  \fill[white] ([yshift=-1cm]current page.north west) rectangle ([yshift=-7.4cm]current page.north east);
+  \fill[coveryellow] ([yshift=-7.4cm]current page.north west) rectangle ([yshift=-8.1cm]current page.north east);
+  \node[anchor=west,inner sep=0] at ([xshift=1.9cm,yshift=-4.2cm]current page.north west)
+       {\includegraphics[width=3.7cm]{logo-upn.png}};
+  \node[anchor=north west,text=white,text width=14.5cm,align=justify,inner sep=0,font=\sffamily\bfseries\footnotesize]
+       at ([xshift=3.5cm,yshift=-9.0cm]current page.north west) {PROPOSAL SKRIPSI};
+  \node[anchor=north west,text=white,text width=14.5cm,align=justify,inner sep=0,font=\sffamily\bfseries\large]
+       at ([xshift=3.5cm,yshift=-9.9cm]current page.north west) {\judul};
+  \node[anchor=north west,text=white,text width=14.5cm,align=left,inner sep=0,font=\sffamily\footnotesize]
+       at ([xshift=3.5cm,yshift=-15.5cm]current page.north west) {{\bfseries \nama}\\ NPM \npm};
+  \node[anchor=north west,text=white,text width=14.5cm,align=left,inner sep=0,font=\sffamily\bfseries\scriptsize]
+       at ([xshift=3.5cm,yshift=-22.5cm]current page.north west)
+       {KEMENTERIAN PENDIDIKAN TINGGI, SAINS, DAN TEKNOLOGI\\
+        UNIVERSITAS PEMBANGUNAN NASIONAL VETERAN JAWA TIMUR\\
+        FAKULTAS ILMU KOMPUTER\\
+        PROGRAM STUDI SAINS DATA\\
+        SURABAYA\\ \tahun};
+\end{tikzpicture}
+\clearpage
+
+% ======================= HALAMAN JUDUL DALAM ========================
+\thispagestyle{empty}
+  \singlespacing
+  \vspace*{0.5cm}
+  \noindent\makebox[\linewidth][l]{\includegraphics[width=3.5cm]{logo-upn.png}}\\[0.2cm]
+  \begin{tikzpicture}[remember picture,overlay]   % garis kuning selebar halaman
+    \fill[coveryellow] (current page.west |- 0,0) rectangle (current page.east |- 0,0.6cm);
+  \end{tikzpicture}\rule{0pt}{0.6cm}\\[1.2cm]
+  {\bfseries\fontsize{14}{18}\selectfont PROPOSAL SKRIPSI}\\[0.8cm]
+  {\bfseries\large \judul}\\[1.5cm]
+  {\bfseries \nama}\\
+  NPM \npm\\[3cm]
+  {\bfseries
+  KEMENTERIAN PENDIDIKAN TINGGI, SAINS, DAN TEKNOLOGI\\
+  UNIVERSITAS PEMBANGUNAN NASIONAL VETERAN JAWA TIMUR\\
+  FAKULTAS ILMU KOMPUTER\\
+  PROGRAM STUDI \MakeUppercase{\prodi}\\
+  SURABAYA\\
+  \tahun}
+
+\clearpage
+
+% ================= HALAMAN SELA  =================
+\halamansela
+
+% ======================= LEMBAR PENGESAHAN ==========================
+% Catatan: lembar pengesahan dicetak timbul
+\frontchapter{LEMBAR PENGESAHAN}
+\thispagestyle{empty}
+\begin{center}
+  \singlespacing
+  {\bfseries \judul}\\[0.8cm]
+  Oleh:\\[0.3cm]
+  \nama\\
+  NPM. \npm
+\end{center}
+\vspace{0.3cm}
+\begingroup\singlespacing
+\noindent Telah dipertahankan dihadapan dan diterima oleh Tim Penguji Seminar Proposal
+Program Studi \prodi{} Fakultas Ilmu Komputer Universitas Pembangunan Nasional
+``Veteran'' Jawa Timur pada tanggal \tanggal:
+\vspace{0.5cm}
+
+\noindent
+\begin{tabular}{@{}p{5.6cm}p{4.9cm}p{3.4cm}@{}}
+  \underline{Nama Dosen} & ........................ & (Ketua Penguji)\\
+  NIP/NPT & & \\[0.7cm]
+  \underline{Nama Dosen} & ........................ & (Penguji 1)\\
+  NIP/NPT & & \\[0.7cm]
+  \multicolumn{3}{c}{Mengetahui,}\\
+  \multicolumn{3}{c}{Koordinator Program Studi \prodi}\\[1.4cm]
+  \multicolumn{3}{c}{\underline{\koorprodi}}\\[4pt]
+  \multicolumn{3}{c}{NIP. \nipkoor}
+\end{tabular}
+\endgroup
+\clearpage
+
+% ================= HALAMAN SELA  =================
+\halamansela
+
+% ================== SURAT PERNYATAAN ORISINALITAS ====================
+\frontchapter{SURAT PERNYATAAN ORISINALITAS}
+\noindent Yang bertandatangan di bawah ini:
+
+\medskip
+\noindent\begin{tabular}{@{}p{4cm}@{}c@{\hspace{0.5em}}p{8cm}@{}}
+  Nama Mahasiswa & : & \nama\\
+  Program Studi  & : & \prodi
+\end{tabular}
+
+\medskip
+\noindent dengan ini menyatakan bahwa isi sebagian maupun keseluruhan proposal skripsi dengan judul:
+
+\medskip
+\noindent{\bfseries \judul}
+
+\medskip
+\noindent adalah benar-benar hasil karya intelektual mandiri, diselesaikan tanpa menggunakan
+bahan-bahan yang tidak diizinkan dan bukan merupakan karya pihak lain yang saya akui sebagai
+karya sendiri. Semua referensi yang dikutip maupun dirujuk telah ditulis secara lengkap pada
+daftar pustaka. Apabila ternyata pernyataan ini tidak benar, saya bersedia menerima sanksi
+sesuai peraturan yang berlaku.
+
+\vspace{1cm}
+\hfill\begin{minipage}{7cm}
+  \singlespacing
+  Surabaya, \tanggal\\[0.3cm]   % contoh: 12 Januari 2025
+  Yang Membuat Pernyataan,\\[1.5cm]
+  meterai\\[1.5cm]
+  \underline{\nama}\\[0.3cm]
+  NPM. \npm
+\end{minipage}
+\clearpage
+
+% ================= HALAMAN SELA  =================
+\halamansela
+
+% =========================== ABSTRAK ================================
+% Abstrak harus memuat: (1) gambaran umum/latar belakang, (2) masalah utama,
+% (3) metode, (4) urgensi, (5) research gap/inovasi, (6) tujuan.
+% Abstrak pada proposal TIDAK mencantumkan hasil analisis.
+% Kata kunci: 5 kata, dipisahkan koma, ditulis italic.
+\frontchapter{ABSTRAK}
+\begingroup\singlespacing\small
+\noindent\begin{tabular}{@{}p{4.1cm}@{}c@{\hspace{0.5em}}p{9cm}@{}}
+  Nama Mahasiswa / NPM   & : & \nama\ / \npm\\
+  Judul Proposal Skripsi & : & \judulabstrak
+\end{tabular}
+\endgroup
+
+\bigskip
+Tulis abstrak anda di sini
+
+\bigskip
+\noindent\textbf{Kata kunci}: \textit{Prediksi, Long Short Term Memory (LSTM), Gated Recurrent Unit (GRU), Time Steps, Learning rate}
+\clearpage
+
+% ================= HALAMAN SELA  =================
+\halamansela
+
+% =========================== ABSTRACT ===============================
+\chapter*{\textit{ABSTRACT}}
+\addcontentsline{toc}{chapter}{\protect\textbf{\textit{ABSTRACT}}}
+\begingroup\singlespacing\small
+\noindent\begin{tabular}{@{}p{4.6cm}@{}c@{\hspace{0.5em}}p{8.6cm}@{}}
+  \textit{Student Name} / NPM & : & \nama\ / \npm\\
+  \textit{Undergraduate thesis proposal title} & : & \textit{\judulen}
+\end{tabular}
+\endgroup
+
+\bigskip
+\textit{Tulis abstrak anda di sini dalam versi Bahasa Inggris}
+
+\bigskip
+\noindent\textbf{\textit{Keywords}}: \textit{Bitcoin, Long Short Term Memory (LSTM), Gated Recurrent Unit (GRU), Time Steps, Learning rate}
+\clearpage
+
+% ================= HALAMAN SELA  =================
+\halamansela
+
+% ========================== KATA PENGANTAR ==========================
+\frontchapter{KATA PENGANTAR}
+Puji syukur kehadirat Allah SWT atas segala rahmat, hidayah dan karunia-Nya kepada penulis
+sehingga proposal skripsi dengan judul \textbf{``\judulcase''} dapat terselesaikan dengan baik.
+
+\indent Penulis mengucapkan terima kasih kepada [....] selaku Dosen Pembimbing I dan [....]
+selaku Dosen Pembimbing 2 yang telah meluangkan waktunya untuk memberikan bimbingan, nasehat
+serta motivasi kepada penulis. Selain itu, selama penyusunan proposal skripsi penulis juga
+banyak menerima bantuan dari berbagai pihak. Untuk itu penulis mengucapkan terima kasih kepada:
+\begin{enumerate}
+  \item Ibu/Bapak [...] selaku Dekan Fakultas Ilmu Komputer Universitas Pembangunan Nasional ``Veteran'' Jawa Timur.
+  \item Ibu/Bapak [...] selaku Koordinator Program Studi \prodi{} Fakultas Ilmu Komputer Universitas Pembangunan Nasional Veteran Jawa Timur.
+  \item Dosen-dosen Program Studi ... dst.
+\end{enumerate}
+
+\indent Penulis menyadari bahwa di dalam penyusunan skripsi ini banyak terdapat kekurangan.
+Untuk itu kritik dan saran yang membangun dari semua pihak sangat diharapkan demi kesempurnaan
+penulisan skripsi ini. Akhirnya, dengan segala keterbatasan yang penulis miliki semoga laporan
+ini dapat bermanfaat bagi semua pihak umumnya dan penulis pada khususnya.
+
+\vspace{0.8cm}
+\hfill\begin{minipage}{6cm}
+  \raggedright
+  Surabaya, bulan-tahun\\[0.3cm]
+  Penulis
+\end{minipage}
+\clearpage
+
+% ================= HALAMAN SELA  =================
+\halamansela
+
+% ============================ DAFTAR ISI ============================
+\begingroup
+\singlespacing
+\renewcommand{\contentsname}{}
+\frontchapter{DAFTAR ISI}
+\vspace{-2\baselineskip}
+\tableofcontents
+\endgroup
+\clearpage
+
+% ================= HALAMAN SELA  =================
+\halamansela
+
+% ========================= DAFTAR GAMBAR ============================
+\phantomsection\addcontentsline{toc}{chapter}{\protect\textbf{DAFTAR GAMBAR}}
+\begingroup\singlespacing
+\listoffigures
+\endgroup
+\clearpage
+
+% ================= HALAMAN SELA  =================
+\halamansela
+
+% ========================== DAFTAR TABEL ============================
+\phantomsection\addcontentsline{toc}{chapter}{\protect\textbf{DAFTAR TABEL}}
+\begingroup\singlespacing
+\listoftables
+\endgroup
+\clearpage
+
+% ================= HALAMAN SELA  =================
+\halamansela
+
+% ========================= DAFTAR LAMPIRAN ==========================
+\frontchapter{DAFTAR LAMPIRAN}
+\begingroup\singlespacing
+\noindent\textbf{Lampiran 1.} Hasil uji plagiasi\\[3pt]
+\noindent\textbf{Lampiran 2.} Daftar hadir peserta ujian Seminar Proposal\\[3pt]
+\noindent dst
+\endgroup
+\clearpage
+
+% ================= HALAMAN SELA  =================
+\halamansela
+
+% ========================== DAFTAR NOTASI ===========================
+\chapter*{DAFTAR NOTASI}
+\begingroup\singlespacing\small
+\noindent\begin{tabular}{@{}p{3.6cm}@{}c@{\hspace{0.7em}}p{9cm}@{}}
+  $I$ & : & Intensitas\\
+  $W_R$ & : & \textit{Weight factor}\\
+  $H$ & : & \textit{Hue}\\
+  $S$ & : & \textit{Saturation}\\
+  $V$ & : & \textit{Value}\\
+  \textit{dst} & : & Gambar akumulator\\
+  \textit{scr} & : & Gambar input\\
+  \textit{F} & : & \textit{Foreground}\\
+  \textit{B} & : & \textit{Background}\\
+  \textit{f} & : & \textit{Frame}\\
+  \textit{SE} & : & \textit{Structuring element}\\
+  \textit{ECD} & : & \textit{Equivalent circular diameter}\\
+  $b$ & : & Bias\\
+  $f(x)_m$ & : & Fungsi vektor masukan\\
+  $d\left(x',\,x\right)$ & : & Jarak di antara data uji $z$ ke setiap vektor data latih\\
+  $K(x,y)$ & : & Fungsi kernel linear\\
+  $G(x)$ & : & Fungsi gaussian satu dimensi\\
+  $\sigma$ & : & Standar deviasi dari distribusi\\
+  $G(x,y)$ & : & Fungsi gaussian dua dimensi
+\end{tabular}
+\endgroup
+
+% ================= HALAMAN SELA  =================
+\halamansela
+
+% =====================================================================
+%                         ISI  (nomor halaman arab)
+% =====================================================================
+\clearpage
+\newgeometry{left=4cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+\pagenumbering{arabic}
+\pagestyle{isibab}
+
+% ============================== BAB I ===============================
+\chapter{PENDAHULUAN}
+
+\section{Latar Belakang}
+Prediksi harga saham merupakan aspek penting dalam analisis pasar keuangan yang membantu
+investor dan pembuat kebijakan membuat keputusan investasi yang lebih terinformasi. Harga saham
+terbentuk melalui mekanisme penawaran dan permintaan di pasar modal yang kompleks dan
+dinamis~\cite{ref1,ref2,ref3,ref4}. Saham bank BUMN seperti Bank Rakyat Indonesia (BBRI), Bank Mandiri (BMRI),
+Bank Negara Indonesia (BBNI), Bank Tabungan Negara (BBTN), dan Bank Syariah Indonesia (BRIS)
+memegang peranan besar dalam perekonomian Indonesia karena memiliki kapitalisasi pasar yang
+signifikan dan berperan strategis sebagai stabilisator ekonomi serta wahana implementasi
+kebijakan pemerintah.
+
+Saat ini, para pengusaha menghadapi kebutuhan yang semakin mendesak untuk memiliki visi dan
+misi yang terarah, serta kemampuan untuk berinovasi dan beradaptasi. Industri kuliner di
+Indonesia terus berkembang dengan pesat, perkembangan pesatnya didorong oleh keingintahuan
+masyarakat, terutama pada kalangan muda dengan rasa keingintahuan terhadap hal-hal baru. Selain
+itu, adanya faktor lain yang juga memiliki dorongan kuat untuk mengikuti tren makanan dan
+minuman terkini yang semakin beragam~\cite{ref1}. Salah satu yang paling diminati adalah kuliner
+Jepang, yang menawarkan cita rasa unik serta merefleksikan budaya dan tradisi Jepang. Pengaruh
+Jepang tidak hanya terlihat dalam dunia fashion seperti harajuku, tetapi juga meluas ke sektor
+kuliner, dengan makanan seperti ramen, sushi, takoyaki, teriyaki, dan yakiniku semakin populer
+di Indonesia~\cite{ref2}.
+
+Fluktuasi harga saham dari lima bank BUMN ini mencerminkan kinerja masing-masing
+perusahaan~\cite{ref5} dan mencerminkan kondisi ekonomi makro Indonesia. Bank-bank BUMN mewakili segmen
+penting dari infrastruktur keuangan Indonesia, berfungsi sebagai stabilisator ekonomi dan
+berperan dalam melayani kepentingan publik sekaligus menghasilkan keuntungan bagi negara.
+Misalnya, perubahan dalam kebijakan moneter, tingkat inflasi, atau kebijakan pemerintah lainnya
+dapat langsung mempengaruhi kinerja sektor perbankan, terutama bank-bank milik negara yang
+memiliki pengaruh besar terhadap perekonomian nasional~\cite{ref6}. Oleh karena itu, menganalisis dan
+memprediksi harga saham bank-bank BUMN menjadi sangat penting dalam merancang strategi
+investasi yang efektif dan mengelola risiko yang terkait.
+
+\section{Rumusan Masalah}
+Rumusan masalah yang menjadi fokus utama pada penelitian ini adalah sebagai berikut:
+\begin{enumerate}
+  \item Bagaimana hasil pengelompokan pelanggan dapat diperoleh dengan menggunakan Algoritma K-Prototype?
+  \item Bagaimana pola asosiasi produk yang sering dibeli pelanggan Jepang dapat diidentifikasi menggunakan Algoritma FP-Growth?
+  \item Bagaimana rekomendasi paket produk yang dapat diberikan menurut hasil analisis asosiasi produk menggunakan Algoritma FP-Growth?
+\end{enumerate}
+
+\section{Batasan Masalah}
+Batasan yang ditetapkan pada masalah yang diamati pada penelitian ini adalah sebagai berikut:
+\begin{enumerate}
+  \item Bahasa Program yang digunakan dalam penelitian ini adalah reactJS dan python.
+  \item Perangkat yang digunakan untuk merancang model prediktif adalah Visual Studio Code dan APInya adalah FastAPI.
+  \item Hasil visualisasi akhir dapat berupa dashboard statistik trend jenis kopi dengan lokasinya, harga pasar kopi per kecamatan, rentang umur pembeli kopi, semua jenis kopi terlaris dan kecamatan terkait.
+  \item Dataset yang diambil adalah dataset primer dan sekunder. Data primernya adalah dengan cara wawancara langsung dengan pemilik toko atau karyawan kedai kopi terkait, penyebaran kuisioner terhadap pembeli kedai kopi Area
+  \item Populasi dan sampelnya adalah Kedai kopi berjenis third wave era dan sampelnya adalah pembeli dengan tidak ada batasan umur akan tetapi pengumpulannya akan dikhususkan untuk umur 17--25 tahun dengan metode
+  \item Dataset yang digunakan untuk pengerjaan penelitian akhir. Karena keterbatasan biaya dan waktu, dataset yang digunakan adalah jumlah pembelian kedai kopi di Area Kota Surabaya dan berjumlah sekitar 200
+\end{enumerate}
+
+\section{Tujuan Penelitian}
+Tujuan dari penelitian ini adalah untuk menjawab rumusan masalah serta memberikan arahan yang
+lebih jelas bagi penelitian ini. Adapun tujuan penelitian ini adalah sebagai berikut:
+\begin{enumerate}
+  \item Mengimplementasikan deteksi wajah untuk autentikasi login mahasiswa menggunakan YOLOv8.
+  \item Mengimplementasikan pengenalan wajah untuk autentikasi login mahasiswa menggunakan InceptionResNetV1.
+  \item Membandingkan performa pengenalan wajah antara model yang dilatih dengan pretrained dataset VGGFace2 dan Casia-Web, serta mengevaluasi perbedaannya dalam konteks autentikasi login mahasiswa.
+\end{enumerate}
+
+\section{Manfaat Penelitian}
+Manfaat penelitian yang dapat diperoleh dari hasil penelitian ini adalah sebagai berikut:
+\begin{enumerate}[itemsep=4pt]
+  \item Bagi bidang keilmuan\par
+    Mengetahui pengaplikasian dari metode Vector Autoregressive-Support Vector Regression dalam
+    melakukan pemodelan prediksi tingkat inflasi, harga beras, dan IHK. Hasil penelitian ini
+    nantinya dapat digunakan untuk bahan pembelajaran dalam pengembangan penelitian selanjutnya.
+  \item Bagi masyarakat\par
+    Mampu mengantisipasi hal-hal yang dapat dicegah ketika inflasi terjadi berdasarkan informasi
+    yang disajikan dari penelitian ini.
+  \item Bagi Pemerintah\par
+    Memberikan informasi kepada pemerintah khususnya bagi penyusun kebijakan untuk pertimbangan
+    mengambil sebuah keputusan.
+\end{enumerate}
+
+% ================= HALAMAN SELA  =================
+\halamansela
+
+% ============================== BAB II ==============================
+\chapter{TINJAUAN PUSTAKA}
+
+\section{Penelitian Terdahulu}
+Tuliskan teori yang anda gunakan untuk menyelesaikan tugas akhir disini.
+
+\begin{table}[h]
+  \caption{Penelitian Terdahulu}
+  \label{tab:terdahulu}
+  \centering\singlespacing\small
+  \begin{tabular}{|p{0.9cm}|p{6.3cm}|p{6.3cm}|}
+    \hline
+    \rowcolor{gray!15}\textbf{No} & \textbf{Profil Pustaka} & \textbf{Metode dan Temuan}\\
+    \hline
+    1 &
+    \textbf{Judul:}\newline \textit{Judul ditulis miring}\par\smallskip 
+    \textbf{Penulis:}
+    \begin{enumerate}[nosep,leftmargin=*,label=\arabic*.]
+      \item Penulis 1
+      \item Penulis 2
+      \item dst
+    \end{enumerate}
+    \par\smallskip\textbf{Identitas artikel:}\par
+    Nama jurnal/prosiding -- volume -- nomor -- halaman
+    &
+    \textbf{Metode:}\newline Jelaskan metode yang digunakan pada penelitian tersebut di sini\par\smallskip 
+    \textbf{Temuan:}\newline Jelaskan temuan pada penelitian tersebut di sini\\
+    \hline
+    2 & Artikel kedua & \\
+    \hline
+    3 & Artikel ketiga & \\
+    \hline
+    dst & dst & dst\\
+    \hline
+  \end{tabular}
+\end{table}
+
+% Setelah menuliskan penelitian terdahulu, WAJIB membuat kajian 2--3 paragraf
+% tentang research gap dan kebaruan yang ditawarkan pada proposal skripsi.
+\colorbox{yellow}{\parbox{\dimexpr\linewidth-2\fboxsep}{\singlespacing
+Setelah menuliskan penelitian terdahulu, anda wajib membuat kajian 2--3 paragraf tentang
+\textit{research gap}, dan kebaruan yang anda tawarkan pada proposal skripsi.}}
+
+\section{Kerangka Teori}
+Gaussian Process Regression adalah metode statistik yang digunakan untuk regresi dan prediksi
+dengan memanfaatkan prinsip probabilistic~\cite{ref18}. Metode ini memiliki fungsi sebagai alat regresi
+nonlinier dan nonparametrik yang berguna untuk melakukan interpolasi antara titik data yang
+tersebar di ruang input berdimensi tinggi. Inflasi adalah suatu peristiwa di mana terjadi
+fluktuasi harga secara menyeluruh yang berlangsung terus-menerus dalam kurun waktu khusus~\cite{ref23}.
+
+\subsection{Anak sub bab}
+IHK adalah parameter ekonomi yang penting karena menyimpan informasi tentang perubahan dalam
+harga komoditas yang dibeli masyarakat, yaitu, barang dan jasa. Perubahan harga komoditas ini
+dari waktu ke waktu yang menyebabkan perubahan IHK dari periode ke periode. Peningkatan IHK
+menyebabkan terjadinya inflasi, dan penurunan disebut deflasi~\cite{ref21}. Perubahan IHK menjadi suatu
+hal yang penting bagi pemerintah, produsen, maupun masyarakat dalam kegiatan ekonomi. Selain itu
+menurut Bank Indonesia, pemerintah juga menggunakan IHK sebagai salah satu acuan dalam
+menentukan kebijakan ekonomi seperti penyesuaian upah gaji, penentuan suku bunga, dan kebijakan
+moneter serta fiskal~\cite{ref22}.
+
+% Jarak antar anak sub bab adalah 1,5 spasi (diatur lewat \titlespacing di preamble).
+
+\subsection{Anak sub bab}
+Tuliskan teori yang termasuk dalam anak sub bab 2.1.2. di sini
+
+Dst
+
+\medskip
+\noindent\textit{Catatan}: Tidak ada batasan jumlah anak sub bab.
+
+% ================= HALAMAN SELA  =================
+\halamansela
+
+% ============================= BAB III ==============================
+\chapter{METODOLOGI PENELITIAN}
+
+\section{Variabel Penelitian dan Sumber Data}
+Tuliskan variabel yang ada pada penelitian anda di sini. Tuliskan sumber data yang anda
+gunakan anda di sini. Penelitian ini menggunakan data historis harga saham harian dari lima
+bank BUMN yang terdaftar di Bursa Efek Indonesia (BEI), yaitu Bank Mandiri (BMRI), Bank Rakyat
+Indonesia (BBRI), Bank Negara Indonesia (BBNI), Bank Tabungan Negara (BBTN), dan Bank Syariah
+Indonesia (BRIS). Sumber utama data adalah situs web \textit{Investing.com}, yang menyediakan
+data keuangan yang kredibel dan terverifikasi. Rentang waktu data yang digunakan adalah dari
+1 September 2018 hingga 30 September 2024, sehingga mencakup berbagai kondisi pasar, termasuk
+periode volatilitas tinggi dan pemulihan ekonomi. Data yang digunakan memiliki struktur sebagai
+berikut:
+
+\section{Langkah Analisis}
+Jelaskan langkah-langkah analisis (prosedur analisis) dari mulai awal sampai dengan akhir,
+dengan kata lain langkah analisis adalah penjelasan detail dari setiap pos yang ada dalam
+diagram alir penelitian. Diagram alir penelitian disertakan pada subbab ini.
+
+Penelitian ini mengadopsi pendekatan kuantitatif dengan tahapan analisis sebagai berikut:
+\begin{enumerate}
+  \item \textbf{Pengumpulan Data.} Data historis harga penutupan saham harian lima bank BUMN
+    (BMRI, BBRI, BBNI, BBTN, BRIS) diunduh dari Investing.com untuk periode 1 September 2018
+    hingga 30 September 2024. Data mencakup 1.475 titik data per saham, dengan struktur kolom
+    utama ``Tanggal'' dan ``Terakhir'' (harga penutupan).
+  \item \textbf{Pra-pemrosesan Data.} Pada tahap ini, dilakukan beberapa proses untuk memastikan
+    kualitas data yang akan digunakan.
+\end{enumerate}
+
+% Contoh penyisipan gambar (diagram alir). Ganti file & caption sesuai kebutuhan.
+\begin{figure}[h]
+  \centering
+  \fbox{\parbox[c][3cm][c]{0.8\linewidth}{\centering\singlespacing Tempatkan diagram alir penelitian di sini\\
+  (\texttt{\textbackslash includegraphics\{...\}})}}
+  \caption{Contoh Gambar}
+  \label{fig:alir}
+\end{figure}
+
+\section{Desain Sistem}
+Jelaskan terkait dengan desain sistem (GUI) yang anda rancang sebagai bagian dari produk luaran
+skripsi anda.
+
+\section{Jadwal Penelitian}
+Tuliskan jadwal penelitian anda (dalam bentuk tabel) di sini
+
+% ================= HALAMAN SELA  =================
+\halamansela
+
+% ========================= DAFTAR PUSTAKA ===========================
+% Format referensi: IEEE Style (IEEEtran.bst) lewat BibTeX. Jarak spasi: 1.
+% Sitasi di teks: \cite{kunci}; isi pustaka diedit di references.bib.
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{\protect\textbf{DAFTAR PUSTAKA}}
+\begingroup
+\singlespacing
+\bibliographystyle{IEEEtran}   % gaya sitasi IEEE (file IEEEtran.bst)
+\bibliography{references}       % file references.bib
+\endgroup
+
+% ================= HALAMAN SELA  =================
+\halamansela
+
+% ============================ LAMPIRAN ==============================
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{\protect\textbf{LAMPIRAN}}
+\chapter*{LAMPIRAN}
+% Lampiran 1 dan 2 bersifat wajib
+\noindent\textbf{Lampiran 1.} Hasil uji plagiasi\\[3pt]
+\noindent\textbf{Lampiran 2.} Daftar hadir peserta ujian Seminar Proposal
+
+\end{document}
