@@ -163,48 +163,58 @@
 
 % ============================ SAMPUL ================================
 \thispagestyle{empty}
+% Latar belakang saja (tanpa \node): oranye, pita putih, garis kuning
 \begin{tikzpicture}[remember picture,overlay]
   \fill[coverorange] (current page.south west) rectangle (current page.north east);
   \fill[white] ([yshift=-1cm]current page.north west) rectangle ([yshift=-7.4cm]current page.north east);
   \fill[coveryellow] ([yshift=-7.4cm]current page.north west) rectangle ([yshift=-8.1cm]current page.north east);
-  \node[anchor=west,inner sep=0] at ([xshift=1.9cm,yshift=-4.2cm]current page.north west)
-       {\includegraphics[width=3.7cm]{logo-upn.png}};
-  \node[anchor=north west,text=white,text width=14.5cm,align=justify,inner sep=0,font=\sffamily\bfseries\footnotesize]
-       at ([xshift=3.5cm,yshift=-9.0cm]current page.north west) {PROPOSAL SKRIPSI};
-  \node[anchor=north west,text=white,text width=14.5cm,align=justify,inner sep=0,font=\sffamily\bfseries\large]
-       at ([xshift=3.5cm,yshift=-9.9cm]current page.north west) {\judul};
-  \node[anchor=north west,text=white,text width=14.5cm,align=left,inner sep=0,font=\sffamily\footnotesize]
-       at ([xshift=3.5cm,yshift=-15.5cm]current page.north west) {{\bfseries \nama}\\ NPM \npm};
-  \node[anchor=north west,text=white,text width=14.5cm,align=left,inner sep=0,font=\sffamily\bfseries\scriptsize]
-       at ([xshift=3.5cm,yshift=-22.5cm]current page.north west)
-       {KEMENTERIAN PENDIDIKAN TINGGI, SAINS, DAN TEKNOLOGI\\
-        UNIVERSITAS PEMBANGUNAN NASIONAL VETERAN JAWA TIMUR\\
-        FAKULTAS ILMU KOMPUTER\\
-        PROGRAM STUDI SAINS DATA\\
-        SURABAYA\\ \tahun};
 \end{tikzpicture}
+\begingroup
+\singlespacing\sffamily\color{white}\setlength{\parindent}{0pt}
+\vspace*{-1.6cm}
+\hspace*{-2cm}\includegraphics[width=3.7cm]{logo-upn.png}\par
+\vspace{2.4cm}
+{\fontsize{14}{16}\selectfont {\bfseries PROPOSAL SKRIPSI}\par}
+\vspace{0.5cm}
+{\bfseries\fontsize{18}{22}\selectfont \hyphenpenalty=10000 \exhyphenpenalty=10000 \tolerance=9999 \emergencystretch=3em \judul\par}
+\vspace{2.4cm}
+{\fontsize{14}{16}\selectfont {\bfseries \nama}\\ NPM \npm\par}
+\vspace{6.0cm}
+{\fontsize{12}{14}\selectfont {\bfseries 
+KEMENTERIAN PENDIDIKAN TINGGI, SAINS, DAN TEKNOLOGI\\
+UNIVERSITAS PEMBANGUNAN NASIONAL VETERAN JAWA TIMUR\\
+FAKULTAS ILMU KOMPUTER\\
+PROGRAM STUDI SAINS DATA\\
+SURABAYA\\
+\tahun\par}}
+\endgroup
 \clearpage
 
 % ======================= HALAMAN JUDUL DALAM ========================
 \thispagestyle{empty}
-  \singlespacing
-  \vspace*{0.5cm}
-  \noindent\makebox[\linewidth][l]{\includegraphics[width=3.5cm]{logo-upn.png}}\\[0.2cm]
-  \begin{tikzpicture}[remember picture,overlay]   % garis kuning selebar halaman
-    \fill[coveryellow] (current page.west |- 0,0) rectangle (current page.east |- 0,0.6cm);
-  \end{tikzpicture}\rule{0pt}{0.6cm}\\[1.2cm]
-  {\bfseries\fontsize{14}{18}\selectfont PROPOSAL SKRIPSI}\\[0.8cm]
-  {\bfseries\large \judul}\\[1.5cm]
-  {\bfseries \nama}\\
-  NPM \npm\\[3cm]
-  {\bfseries
-  KEMENTERIAN PENDIDIKAN TINGGI, SAINS, DAN TEKNOLOGI\\
-  UNIVERSITAS PEMBANGUNAN NASIONAL VETERAN JAWA TIMUR\\
-  FAKULTAS ILMU KOMPUTER\\
-  PROGRAM STUDI \MakeUppercase{\prodi}\\
-  SURABAYA\\
-  \tahun}
-
+% Garis kuning selebar halaman tepat di bawah logo
+\begin{tikzpicture}[remember picture,overlay]
+  \fill[coveryellow] ([yshift=-5.8cm]current page.north west) rectangle ([yshift=-6.4cm]current page.north east);
+\end{tikzpicture}
+\begingroup
+\singlespacing\sffamily\setlength{\parindent}{0pt}
+\vspace*{-3.2cm}
+\hspace*{-1.6cm}\includegraphics[width=3.7cm]{logo-upn.png}\par
+\vspace{2.4cm}
+{\fontsize{14}{16}\selectfont {\bfseries PROPOSAL SKRIPSI}\par}
+\vspace{0.5cm}
+{\bfseries\fontsize{18}{22}\selectfont \hyphenpenalty=10000 \exhyphenpenalty=10000 \tolerance=9999 \emergencystretch=3em \judul\par}
+\vspace{2.4cm}
+{\fontsize{14}{16}\selectfont {\bfseries \nama}\\ NPM \npm\par}
+\vspace{6.0cm}
+{\fontsize{12}{14}\selectfont {\bfseries 
+KEMENTERIAN PENDIDIKAN TINGGI, SAINS, DAN TEKNOLOGI\\
+UNIVERSITAS PEMBANGUNAN NASIONAL VETERAN JAWA TIMUR\\
+FAKULTAS ILMU KOMPUTER\\
+PROGRAM STUDI SAINS DATA\\
+SURABAYA\\
+\tahun\par}}
+\endgroup
 \clearpage
 
 % ================= HALAMAN SELA  =================
